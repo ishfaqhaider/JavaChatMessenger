@@ -1,0 +1,103 @@
+set commit on:
+commit;
+select * from userinfo;
+select * from friends;
+select * from message;
+drop table message;
+
+delete friends  where username1='arslan' and username2 ='daniyal';
+select * from message where (username1='ishfaq' or username2='ishfaq') and accepted='y' order by fshipid   ;
+select * from friends where (username1='arslan' or username2='arslan') and accepted='y' order by fshipid   ;
+select fshipid from friends order by fshipid desc;
+delete from fshipid where  (username1='arslan' or username2='imran');
+delete from friends where  accepted='n';
+
+select * from friends where (username1='ishfaq' or username2='ishfaq') and accepted='y';
+
+//select username2 from friends where username1='ishfaq' or select username1 from friends where username2='ishfaq';
+
+select * from userinfo where USERNAME='ishfaq';
+commit;
+select * from userinfo where USERNAME='arslan';
+--- create table userinfo ----
+create table userinfo(
+username varchar2(20),
+pword varchar2(20) not null,
+constraint userinfo_pk primary key (username)
+);
+insert into userinfo(username,pword) values ('arslan','123');
+insert into userinfo(username,pword) values ('ahmed','123');
+insert into userinfo(username,pword) values ('umer','123');
+insert into userinfo(username,pword) values ('waseh','123');
+insert into userinfo(username,pword) values ('ishfaq','123');
+insert into userinfo(username,pword) values ('daniyal','123');
+insert into userinfo(username,pword) values ('imran','123');
+insert into userinfo(username,pword) values ('hasan','123');
+insert into userinfo(username,pword) values ('jiger','123');
+insert into userinfo(username,pword) values ('ali','123');
+
+insert into userinfo(username,pword) values ('','123');
+insert into userinfo(username,pword) values ('','123');
+insert into userinfo(username,pword) values ('','123');
+insert into userinfo(username,pword) values ('','123');
+
+
+ drop table userinfo;
+ drop table friends;
+ purge recyclebin;
+--- create table friends ---- 
+create table friends(
+fshipid number(4),
+username1 varchar2(20) not null,
+username2 varchar2(20) not null,
+accepted char not null,
+constraint friends_pk primary key (fshipid),
+constraint fr_a_pk foreign key (username1) references userinfo(username),
+constraint fr_b_pk foreign key (username2) references userinfo(username)
+);
+--- create table message ---- 
+create table message(
+msgid number(4),
+username1 varchar2(20) not null,
+username2 varchar2(20) not null,
+msg varchar2(400),
+accepted char not null,
+constraint message_pk primary key (msgid),
+constraint msg_a_pk foreign key (username1) references userinfo(username),
+constraint msg_b_pk foreign key (username2) references userinfo(username)
+);
+insert into friends(fshipid,username1,username2,accepted) values (1,'arslan','imran','n');
+insert into friends(fshipid,username1,username2,accepted) values (2,'arslan','ishfaq','y');
+insert into friends(fshipid,username1,username2,accepted) values (3,'arslan','jiger','y');
+insert into friends(fshipid,username1,username2,accepted) values (4,'ishfaq','daniyal','y');
+insert into friends(fshipid,username1,username2,accepted) values (5,'ishfaq','umer','y');
+insert into friends(fshipid,username1,username2,accepted) values (6,'daniyal','waseh','y');
+insert into friends(fshipid,username1,username2,accepted) values (7,'ishfaq','ahmed','n');
+insert into friends(fshipid,username1,username2,accepted) values (8,'daniyal','ahmed','n');
+insert into friends(fshipid,username1,username2,accepted) values (9,'arslan','ahmed','n');
+insert into friends(fshipid,username1,username2,accepted) values (10,'arslan','daniyal','y');
+insert into friends(fshipid,username1,username2,accepted) values (11,'daniyal','jiger','n');
+--
+insert into message(msgid,username1,username2,msg,accepted) values (1,'arslan','daniyal','how r u','y');
+insert into message(msgid,username1,username2,msg,accepted) values (2,'ishfaq','ahmed','whats up.........?','y');
+select fshipid from friends order by desc;
+
+delete from friends where (username1= 'jiger' or 'arslan') and (username2='arslan' or 'jiger');
+
+select * from friends where username1='jiger' and username2='arslan';
+select * from friends where username1='arslan' and username2='jiger';
+
+select fshipid from friends order by fshipid desc;
+
+update friends set accepted='y' where username1='daniyal' and username2='jiger';
+
+delete from friends where  (username1='daniyal' and username2='jiger');
+
+delete from friends where  (username1='daniyal' and username2='jiger');
+
+rollback;
+insert into friends(fshipid,username1,username2,accepted) values (,'','','y');
+insert into friends(fshipid,username1,username2,accepted) values (,'','','y');
+select * from userinfo;
+update userinfo set pword='123' where username='ali' and pword='456';
+
